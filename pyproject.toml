@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "pychecksign"
+version = "0.1.0"
+description = "Help verify signed message on backend"
+authors = ["Dry"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.81.0"
+web3 = "^5.30.0"
+uvicorn = "^0.18.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
