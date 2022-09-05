@@ -12,6 +12,9 @@ web3 = "^5.30.0"
 uvicorn = "^0.18.3"
 
 
+[tool.poetry.group.dev.dependencies]
+autopep8 = "^1.7.0"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
