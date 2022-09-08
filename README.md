@@ -1,4 +1,4 @@
-# pyCheckSign
+# pychecksign
 Simple python backend to validate signed message on front end
 
 ## Installation
