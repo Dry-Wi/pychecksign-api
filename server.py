@@ -1,11 +1,23 @@
-from email import message
 import logging
 from pydantic import BaseModel
-from fastapi import FastAPI
+from eth_account import Account
 from eth_account.messages import encode_defunct
 from web3.auto import w3
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+
+
+origins = ["*"]
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 logging.basicConfig(encoding='utf-8', level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -30,9 +42,15 @@ async def verify(signed_message: MessageVerification):
 
     # We verify the signature with the original message
     message = encode_defunct(text=signed_message.nonce)
-    signed_address = (w3.eth.account.recover_message(
-        message, signature=signature)).lower()
+    recovered_address = (w3.eth.account.recover_message(
+        message, signature=signature))
 
-    return {
-        'verify_result': (signed_address == signed_message.signature)
+    result = {
+        'signer_address': signed_message.address,
+        'verify_result': (recovered_address == signed_message.address),
+        'recovered_address': recovered_address
     }
+
+    logging.debug(result)
+
+    return result
